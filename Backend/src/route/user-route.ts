@@ -49,7 +49,7 @@ userRouter.post("/signup", async (c) => {
 });
 
 // Sign in Route
-userRouter.post("/api/v1/signin", async (c) => {
+userRouter.post("/signin", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
