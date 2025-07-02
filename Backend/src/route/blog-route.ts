@@ -16,11 +16,13 @@ export const blogRouter = new Hono<{
 // Move This to Auth Middleware
 blogRouter.use("/*", async (c, next) => {
   const authHeader = c.req.header("authorization") || "";
-  const user = await verify(authHeader, c.env.JWT_SECRET);
-  if (user) {
-    c.set("userId", String(user.id));
-    await next();
-  } else {
+  try {
+    const user = await verify(authHeader, c.env.JWT_SECRET);
+    if (user) {
+      c.set("userId", String(user.id));
+      await next();
+    }
+  } catch (error) {
     c.status(403);
     return c.json({ message: "You Are Not Logged In" });
   }
@@ -33,7 +35,7 @@ blogRouter.post("/", async (c) => {
 
   const authorId = c.get("userId");
   const body = await c.req.json();
-  console.log("Checking type of authorId", typeof(authorId));
+  console.log("Checking type of authorId", typeof authorId);
 
   const blog = await prisma.post.create({
     data: {
