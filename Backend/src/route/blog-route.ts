@@ -29,6 +29,13 @@ blogRouter.use("/*", async (c, next) => {
   }
 });
 
+
+/*
+ * Blog Creation Route
+ * POST : /api/v1/blog
+ * req.body = { title : "Hello, I am Nilay Basak", content : "First Blog from Nilay" }
+ * header => Authorization => jwt
+ */
 blogRouter.post("/", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -55,6 +62,12 @@ blogRouter.post("/", async (c) => {
   });
 });
 
+/*
+ * Blog Updating Route
+ * PUT : /api/v1/blog
+ * req.body = { id: "post_id" , title : "Hello, I am Nilay Basak", content : "First Blog from Nilay" }
+ * header => Authorization => jwt
+ */
 blogRouter.put("/", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -82,6 +95,11 @@ blogRouter.put("/", async (c) => {
 });
 
 // Add Pagination Logic Here
+/*
+ * Fetch All Blogs Route
+ * GET : /api/v1/blog/bulk
+ * req.body = {}
+ */
 blogRouter.get("/bulk", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -93,6 +111,11 @@ blogRouter.get("/bulk", async (c) => {
   });
 });
 
+/*
+ * Fetch A Blogs By It's Id Route
+ * GET : /api/v1/blog/:id
+ * req.body = {}
+ */
 blogRouter.get("/:id", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,

@@ -11,7 +11,11 @@ export const userRouter = new Hono<{
   };
 }>();
 
-// Sign Up Route
+/*
+ * Sign Up Route
+ * POST : /api/v1/user/signup
+ * req.body = { name: "Nilay Basak", email : "nilaybasak@gmail.com", password : "12345678" }
+ */
 userRouter.post("/signup", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -48,7 +52,11 @@ userRouter.post("/signup", async (c) => {
   }
 });
 
-// Sign in Route
+/*
+ * Sign In Route
+ * POST : /api/v1/user/signin
+ * req.body = { email : "nilaybasak@gmail.com", password : "12345678" }
+ */
 userRouter.post("/signin", async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
