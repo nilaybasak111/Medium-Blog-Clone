@@ -1,0 +1,14 @@
+{
+  "name": "@nilaybasak111/medium-common",
+  "version": "4.0.0",
+  "description": "Common Components for Medium",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nilay Basak",
+  "license": "ISC",
+  "dependencies": {
+    "zod": "^3.25.67"
+  }
+}
