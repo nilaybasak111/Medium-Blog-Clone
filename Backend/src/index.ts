@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { verify } from "hono/jwt";
+import { cors } from "hono/cors";
 import { userRouter } from "./route/user-route";
 import { blogRouter } from "./route/blog-route";
 
@@ -12,6 +12,7 @@ const app = new Hono<{
   };
 }>();
 
+app.use("/*", cors());
 app.route("/api/v1/user", userRouter);
 app.route("/api/v1/blog", blogRouter);
 

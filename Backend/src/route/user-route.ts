@@ -14,7 +14,7 @@ export const userRouter = new Hono<{
 /*
  * Sign Up Route
  * POST : /api/v1/user/signup
- * req.body = { name: "Nilay Basak", email : "nilaybasak@gmail.com", password : "12345678" }
+ * req.body = { name: "nilaybasak", email : "nilaybasak@gmail.com", password : "12345678" }
  */
 userRouter.post("/signup", async (c) => {
   const prisma = new PrismaClient({
@@ -35,11 +35,6 @@ userRouter.post("/signup", async (c) => {
         password: body.password,
       },
     });
-
-    if (!user) {
-      c.status(403);
-      return c.json({ error: "User Not Found" });
-    }
 
     // Generating JWT & Returning to the User
     const token = await sign({ id: user.id }, c.env.JWT_SECRET);
