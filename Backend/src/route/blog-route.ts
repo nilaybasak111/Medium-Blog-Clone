@@ -17,8 +17,14 @@ export const blogRouter = new Hono<{
 // Move This to Auth Middleware
 blogRouter.use("/*", async (c, next) => {
   const authHeader = c.req.header("authorization") || "";
+
+  // Adding Bearer Token Verification Here in Backend
+  const token = authHeader.split(" ")[1];
+  if(!token) {
+     return c.json({ message: "JWT Token Not Found / JWT Format Not Correct" });
+  }
   try {
-    const user = await verify(authHeader, c.env.JWT_SECRET);
+    const user = await verify(token, c.env.JWT_SECRET);
     if (user) {
       c.set("userId", String(user.id));
       await next();
@@ -33,7 +39,7 @@ blogRouter.use("/*", async (c, next) => {
  * Blog Creation Route
  * POST : /api/v1/blog
  * req.body = { title : "Hello, I am Nilay Basak", content : "First Blog from Nilay" }
- * header => Authorization => jwt
+ * header => Authorization => Bearer jwt
  */
 blogRouter.post("/", async (c) => {
   const prisma = new PrismaClient({

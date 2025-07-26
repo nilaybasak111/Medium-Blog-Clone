@@ -19,7 +19,8 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
         postInputs
       );
       const jwt = response.data.jwt;
-      localStorage.setItem("token", jwt);
+      // Adding Bearer Token Verification Here in Frontend
+      localStorage.setItem("token", `Bearer ${jwt}`);
       navigate("/blogs");
     } catch (error) {
       alert("Error while sending request");
