@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { sign } from "hono/jwt";
 import { signupInput, signinInput } from "@nilaybasak111/medium-common";
+import { authMiddleware } from "../middlewares/auth-request-middlewares";
 
 export const userRouter = new Hono<{
   Bindings: {
@@ -86,12 +87,38 @@ userRouter.post("/signin", async (c) => {
 });
 
 /*
- * Unser Info Route
+ * User Info Route
  * GET : /api/v1/user/info
- * req.body = { email : "nilaybasak@gmail.com", password : "12345678" }
+ * req.body = {}
+ * header => Authorization => Bearer JWT
  */
-userRouter.get("/info", async (c) => {
+userRouter.get("/info", authMiddleware, async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
+
+  // Getting User Id From JWT
+   const userId = c.get("userId");
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId
+      }, select: {
+        id: true,
+        email: true,
+        name: true
+      }
+    });
+
+      if (!user) {
+      c.status(403);
+      return c.json({ error: "User Not Found" });
+    }
+
+    return c.json({ user: user });
+
+  } catch (error) {
+    c.status(403);
+    return c.json({ error: "Error While Fetching User Info" });
+  }
 });

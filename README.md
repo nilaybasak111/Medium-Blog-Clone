@@ -7,11 +7,10 @@ Backend
 
 - Use Zod & Hashing for validation and password hashing
 - You can add pagination in /api/v1/blog/bulk endpoint
-- Move blogRouter.use to Auth Middleware
 - Add Expiry for the JWT
-- Add Comment in User & Blog Route for Better Understanding
 - Add Published Time in Blog
 - Add LogOut Feature in Frontend / Backend
+- Add Delete Endpoint for the log
 
 Frontend
 
@@ -20,4 +19,5 @@ Frontend
 - Move BACKEND_URL to the .env file
 - Add caching to the blog frontend and backend to prevent loading the article every time it is accessed
 - You can design a basic homepage for the blog
-- In AppBar.tsx (Line 16) set authorname dynamically. This may change avatar component dynamically.
+- In AppBar.tsx (Line 16) set authorname dynamically. This may change avatar component dynamically. Create a hook to get initials of the logged in user
+- Add Delete & Edit Page for the Blog

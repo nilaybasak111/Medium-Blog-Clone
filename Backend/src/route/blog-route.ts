@@ -2,7 +2,6 @@ import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { createBlogInput, updateBlogInput } from "@nilaybasak111/medium-common";
-import { verify } from "hono/jwt";
 import { authMiddleware } from "../middlewares/auth-request-middlewares";
 
 export const blogRouter = new Hono<{
@@ -22,7 +21,7 @@ blogRouter.use("/*", authMiddleware);
  * Blog Creation Route
  * POST : /api/v1/blog
  * req.body = { title : "Hello, I am Nilay Basak", content : "First Blog from Nilay" }
- * header => Authorization => Bearer jwt
+ * header => Authorization => Bearer JWT
  */
 blogRouter.post("/", async (c) => {
   const prisma = new PrismaClient({
@@ -54,7 +53,7 @@ blogRouter.post("/", async (c) => {
  * Blog Updating Route
  * PUT : /api/v1/blog
  * req.body = { id: "post_id" , title : "Hello, I am Nilay Basak", content : "First Blog from Nilay" }
- * header => Authorization => Bearer jwt
+ * header => Authorization => Bearer JWT
  */
 blogRouter.put("/", async (c) => {
   const prisma = new PrismaClient({
