@@ -84,3 +84,14 @@ userRouter.post("/signin", async (c) => {
     return c.json({ error: "Error While Signing In" });
   }
 });
+
+/*
+ * Unser Info Route
+ * GET : /api/v1/user/info
+ * req.body = { email : "nilaybasak@gmail.com", password : "12345678" }
+ */
+userRouter.get("/info", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+});

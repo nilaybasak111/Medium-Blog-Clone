@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { createBlogInput, updateBlogInput } from "@nilaybasak111/medium-common";
 import { verify } from "hono/jwt";
+import { authMiddleware } from "../middlewares/auth-request-middlewares";
 
 export const blogRouter = new Hono<{
   Bindings: {
@@ -14,26 +15,8 @@ export const blogRouter = new Hono<{
   };
 }>();
 
-// Move This to Auth Middleware
-blogRouter.use("/*", async (c, next) => {
-  const authHeader = c.req.header("authorization") || "";
-
-  // Adding Bearer Token Verification Here in Backend
-  const token = authHeader.split(" ")[1];
-  if(!token) {
-     return c.json({ message: "JWT Token Not Found / JWT Format Not Correct" });
-  }
-  try {
-    const user = await verify(token, c.env.JWT_SECRET);
-    if (user) {
-      c.set("userId", String(user.id));
-      await next();
-    }
-  } catch (error) {
-    c.status(403);
-    return c.json({ message: "You Are Not Logged In" });
-  }
-});
+// Adding Auth Middleware
+blogRouter.use("/*", authMiddleware);
 
 /*
  * Blog Creation Route
@@ -71,7 +54,7 @@ blogRouter.post("/", async (c) => {
  * Blog Updating Route
  * PUT : /api/v1/blog
  * req.body = { id: "post_id" , title : "Hello, I am Nilay Basak", content : "First Blog from Nilay" }
- * header => Authorization => jwt
+ * header => Authorization => Bearer jwt
  */
 blogRouter.put("/", async (c) => {
   const prisma = new PrismaClient({
