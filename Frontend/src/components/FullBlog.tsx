@@ -3,6 +3,16 @@ import { AppBar } from "./AppBar";
 import { AvatarComponent } from "./BlogCard";
 
 export const FullBlog = ({ blog }: { blog: Blogs }) => {
+  const dateObj = new Date(blog.publishedDate);
+
+  const indianDateTime = dateObj.toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
   return (
     <div>
       <AppBar />
@@ -10,8 +20,9 @@ export const FullBlog = ({ blog }: { blog: Blogs }) => {
         <div className="grid grid-cols-12 px-10 w-full pt-200 max-w-screen-xl pt-12">
           <div className="col-span-8">
             <div className="text-5xl font-extrabold">{blog.title}</div>
-            {/* Fetch the date of the blog from the database */}
-            <div className="text-slate-500 pt-2">Posted on 18th July 2025</div>
+            <div className="text-slate-500 pt-2">
+              Posted On {indianDateTime}
+            </div>
             <div className="pt-4">{blog.content}</div>
           </div>
           <div className="col-span-4">

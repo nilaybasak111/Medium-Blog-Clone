@@ -47,6 +47,17 @@ export const BlogCard = ({
   content,
   publishedDate,
 }: BlogCardProps) => {
+  //console.log("publishedDate", publishedDate);
+  const dateObj = new Date(publishedDate);
+
+  const indianDateTime = dateObj.toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
   return (
     <Link to={`/blog/${id}`}>
       <div className="p-4 border-b border-slate-200 pb-4 w-screen max-w-screen-md cursor-pointer">
@@ -59,7 +70,7 @@ export const BlogCard = ({
             <Circle />
           </div>
           <div className="flex justify-center flex-col pl-2 font-thin text-slate-500">
-            {publishedDate}
+            {indianDateTime}
           </div>
         </div>
         <div className="text-xl font-semibold pt-2">{title}</div>
