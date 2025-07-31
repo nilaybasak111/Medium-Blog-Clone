@@ -22,25 +22,20 @@ export function AvatarComponent({
   size?: "small" | "big";
 }) {
   // Take the first letter of the first two words
-  const initials = name
-    .split(" ")
-    .filter(Boolean)
-    .map((word) => word[0].toUpperCase())
-    .slice(0, 2)
-    .join("");
+  const initials =
+    name
+      .split(" ")
+      .filter(Boolean)
+      .map((word) => word[0].toUpperCase())
+      .slice(0, 2)
+      .join("") || "A";
+  const sizeClass = size === "big" ? "w-10 h-10 text-lg" : "w-8 h-8 text-sm";
+
   return (
     <div
-      className={`relative inline-flex items-center justify-center overflow-hidden bg-gray-100 rounded-full ${
-        size === "big" ? "w-8 h-8" : "w-6 h-6"
-      } dark:bg-gray-600`}
+      className={`rounded-full bg-blue-600 text-white flex items-center justify-center ${sizeClass}`}
     >
-      <span
-        className={`${
-          size === "small" ? "text-xs" : "text-md"
-        } text-gray-600 dark:text-gray-300`}
-      >
-        {initials}
-      </span>
+      {initials}
     </div>
   );
 }
@@ -70,7 +65,7 @@ export const BlogCard = ({
         <div className="text-xl font-semibold pt-2">{title}</div>
         {/* Add check here if content is greter than 100 then use ... */}
         <div className="text-md font-thin">
-          {content.slice(0, 100) + "...."}
+          {content.length > 100 ? content.slice(0, 100) + "...." : content}
         </div>
         <div className="text-slate-500 text-sm font-thin pt-4">{`${Math.ceil(
           content.length / 100

@@ -13,6 +13,36 @@ export interface Blogs {
   publishedDate: string;
 }
 
+// Add An Interface For The User
+export interface User {
+  name: string;
+}
+
+// Hook to Get the Logged In User's Data
+export const useUser = () => {
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    axios
+      .get(`${BACKEND_URL}/api/v1/user/info`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        // console.log("response in useUser",response);
+        setUser(response.data.user); // Assuming the API returns { user: { name: '...' } }
+        setLoading(false);
+      });
+  }, []);
+
+  return {
+    loading,
+    user,
+  };
+};
+
 // Get A Blog From Backend
 export const useBlog = ({ id }: { id: string }) => {
   const [loading, setLoading] = useState(true);

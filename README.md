@@ -10,14 +10,14 @@ Backend
 - Add Expiry for the JWT
 - Add Published Time in Blog
 - Add LogOut Feature in Frontend / Backend
-- Add Delete Endpoint for the log
+- Add Delete Endpoint for the Blog
 
 Frontend
 
 - Add Clean message in Frontend\src\components\Auth.tsx sendRequest function
 - Add Cloudflare worker link in Frontend\src\config.ts BACKEND_URL
 - Move BACKEND_URL to the .env file
-- Add caching to the blog frontend and backend to prevent loading the article every time it is accessed
+- Add caching to the blog frontend and backend to prevent loading the article, Username(AvatarComponent) every time it is accessed
 - You can design a basic homepage for the blog
 - In AppBar.tsx (Line 16) set authorname dynamically. This may change avatar component dynamically. Create a hook to get initials of the logged in user
 - Add Delete & Edit Page for the Blog
