@@ -22,9 +22,19 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
       // Adding Bearer Token Verification Here in Frontend
       localStorage.setItem("token", `Bearer ${jwt}`);
       navigate("/blogs");
-    } catch (error) {
-      alert("Error while sending request");
-      console.log(error);
+    } catch (error: any) {
+      // Axios error handling
+      if (axios.isAxiosError(error)) {
+        const message =
+          error.response?.data?.message ||
+          "Something Went Wrong On the Server.";
+        alert(message);
+        console.error("Axios Error Response:", error.response);
+      } else {
+        // Unknown error
+        alert("An Unexpected Error Occurred.");
+        console.error("Unexpected Error:", error);
+      }
     }
   }
 
@@ -47,32 +57,33 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
             </div>
           </div>
           <div className="pt-4">
-            {/* Email Inputbox in Signup */}
-              <LabelledInput
-                label="Email"
-                placeholder="nilaybasak@gmail.com"
-                onChange={(e) => {
-                  setPostInputs({
-                    ...postInputs,
-                    email: e.target.value,
-                  });
-                }}
-              />
-            
-
-            {/* Username / Name Inputbox in Signup */}
-            {type === "signup" ?(<LabelledInput
-              label="Username"
-              placeholder="nilaybasak111"
+            {/* Email Inputbox in Signup & Signin */}
+            <LabelledInput
+              label="Email"
+              placeholder="nilaybasak@gmail.com"
               onChange={(e) => {
                 setPostInputs({
                   ...postInputs,
-                  name: e.target.value,
+                  email: e.target.value,
                 });
               }}
-            />):null}
+            />
 
-            {/* Password Inputbox in Signup */}
+            {/* Username / Name Inputbox in Signup */}
+            {type === "signup" ? (
+              <LabelledInput
+                label="Username"
+                placeholder="nilaybasak111"
+                onChange={(e) => {
+                  setPostInputs({
+                    ...postInputs,
+                    name: e.target.value,
+                  });
+                }}
+              />
+            ) : null}
+
+            {/* Password Inputbox in Signup & Signin */}
             <LabelledInput
               label="Password"
               type={"password"}
@@ -98,7 +109,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
   );
 };
 
-// SignUp Inputbox
+// SignUp & SignIn Inputbox
 interface LabelledInputType {
   label: string;
   placeholder: string;

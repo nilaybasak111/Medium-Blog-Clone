@@ -15,7 +15,6 @@ Backend
 
 Frontend
 
-- Add Clean message in Frontend\src\components\Auth.tsx sendRequest function
 - Add Cloudflare worker link in Frontend\src\config.ts BACKEND_URL
 - Move BACKEND_URL to the .env file
 - Add caching to the blog frontend and backend to prevent loading the article, Username(AvatarComponent) every time it is accessed
